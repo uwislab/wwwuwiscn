@@ -1,0 +1,43 @@
+<!--pages/chat-bg/chat-bg.wxml-->
+<!-- pages/chat-bg/chat-bg.wxml -->
+<view class="container">
+  <!-- 当前背景预览 -->
+  <view class="preview-section">
+    <text class="section-title">当前背景</text>
+    <view class="current-bg-back">
+      <image 
+      class="current-bg" 
+      src="{{currentBg}}"
+      mode="aspectFill"
+    />
+    </view>
+  </view>
+
+  <!-- 背景图片列表 -->
+  <view class="bg-list">
+    <text class="section-title">选择背景</text>
+    <view class="grid-container">
+      <!-- 系统预设背景 -->
+      <block wx:for="{{presetBackgrounds}}" wx:key="index">
+        <view 
+          class="bg-item {{currentBg === item.pictureUrl ? 'selected' : ''}}"
+          bindtap="selectBackground"
+          data-url="{{item.pictureUrl}}"
+          data-id="{{item.pictureId}}"
+        >
+        <image class="delete-icon" 
+        src="/images/delete.png" 
+        catchtap="showDeleteConfirm" 
+        data-item="{{item}}"
+        wx:if="{{item.pictureUpBy === 0}}"/>
+          <image class="bg-image" src="{{item.pictureUrl}}" mode="aspectFill"></image>
+        </view>
+      </block>
+
+      <!-- 上传新背景 -->
+      <view class="bg-item upload-btn" bindtap="uploadNewBg">
+        <image class="add-icon" src="/images/add.png"/>
+      </view>
+    </view>
+  </view>
+</view>

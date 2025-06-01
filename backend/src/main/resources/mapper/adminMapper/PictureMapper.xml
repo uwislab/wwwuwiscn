@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.funny.demo.mapper.adminMapper.PictureMapper">
+<!--    根据url得到id-->
+    <select id="getIdByUrl" resultType="integer">
+        SELECT picture_id FROM tb_picture WHERE picture_url = #{url}
+    </select>
+<!--    根据Id得到url-->
+    <select id="getUrlById" resultType="java.lang.String">
+        select picture_url from tb_picture where picture_id = #{id}
+    </select>
+    <update id="changeType">
+        UPDATE tb_picture SET picture_type = #{pictureType} WHERE picture_id = #{pictureId}
+    </update>
+</mapper>

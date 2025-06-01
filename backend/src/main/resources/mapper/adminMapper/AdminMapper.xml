@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.funny.demo.mapper.adminMapper.AdminMapper">
+<!--    修改管理员密码-->
+    <update id="changeAdminPassword" parameterType="String">
+        UPDATE tb_admin SET admin_password = #{adminPassword} WHERE admin_id = #{adminId}
+    </update>
+<!--    修改管理员信息-->
+    <update id="changeAdmin">
+        UPDATE tb_admin SET admin_email = #{adminEmail}, admin_phone = #{adminPhone} WHERE admin_id = #{adminId}
+    </update>
+    <update id="updateAdminImage">
+        UPDATE tb_admin SET admin_image = #{setAdminImage} WHERE admin_image = #{pictureId}
+    </update>
+    <update id="changeAdminImage">
+        UPDATE tb_admin SET admin_image = #{pictureId} WHERE admin_id = #{adminId}
+    </update>
+</mapper>

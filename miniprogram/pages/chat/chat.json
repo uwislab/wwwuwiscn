@@ -1,0 +1,6 @@
+{
+  "requiredPermissions": {
+    "openapi": ["wx.startRecord", "wx.createInnerAudioContext","wx.getRecorderManager"]
+  },
+  "navigationBarTitleText": "消息"
+}

@@ -1,0 +1,55 @@
+<!--pages/login/login.wxml-->
+<view class="container">
+  <!-- 顶部装饰图形 -->
+  <view class="decorative-circle"></view>
+  
+  <!-- 登录内容区域 -->
+  <view class="login-content">
+    <!-- 欢迎文案 -->
+    <view class="welcome-section">
+      <text class="welcome-text">欢迎使用</text>
+      <text class="app-name">FunnyRobot</text>
+    </view>
+
+    <!-- 用户头像 -->
+    <image 
+      class="default-avatar"
+      src="/images/login-avatar.png"
+    />
+
+    <!-- 登录按钮 -->
+    <button 
+      class="login-btn"
+      open-type="getUserProfile"
+      bindtap="handleLogin"
+      loading="{{isLoading}}"
+    >
+      {{isLoading ? '登录中...' : '微信一键登录'}}
+    </button>
+
+    <!-- 协议声明 -->
+    <view class="agreement">
+      <text>登录即表示同意《用户协议》和《隐私政策》</text>
+    </view>
+  </view>
+  <!-- 禁用提示弹窗 -->
+  <view class="modal-mask" wx:if="{{showModal}}">
+  <view class="modal-content">
+    <!-- 标题 -->
+    <view class="modal-header">
+      <text class="modal-title">提示</text>
+    </view>
+
+    <!-- 提示内容 -->
+    <view class="form-item">
+      <text class="label">您的账号已被禁用，是否需要申请解封</text>
+    </view>
+
+    <!-- 按钮 -->
+    <view class="modal-buttons">
+      <button class="back-btn" bindtap="back">取消</button>
+    <button class="confirm-btn" bindtap="applyUnfrozen">确认</button>
+    </view>
+  </view>
+</view>
+</view>

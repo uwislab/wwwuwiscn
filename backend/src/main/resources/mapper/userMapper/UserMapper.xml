@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.funny.demo.mapper.userMapper.UserMapper">
+<!--修改用户名称-->
+    <update id="changeUserName" parameterType="String">
+        UPDATE tb_user SET user_name = #{userName} WHERE user_id = #{userId}
+    </update>
+<!--修改用户头像-->
+    <update id="changeUserImage">
+        UPDATE tb_user SET user_image = #{userImage} WHERE user_id = #{userId}
+    </update>
+<!--修改用户聊天背景-->
+    <update id="changeUserBack">
+        UPDATE tb_user SET user_back = #{userBack} WHERE user_id = #{userId}
+    </update>
+<!--修改用户个性签名-->
+    <update id="changeUserSignature" parameterType="String">
+        UPDATE tb_user SET user_signature = #{userSignature} WHERE user_id = #{userId}
+    </update>
+<!--修改用户性别-->
+    <update id="changeUserSex">
+        UPDATE tb_user SET user_sex = #{userSex} WHERE user_id = #{userId}
+    </update>
+    <select id="getImageId">
+        SELECT user_image FROM tb_user WHERE user_id = #{userId}
+    </select>
+    <update id="updateUserImage">
+        UPDATE tb_user SET user_image = #{setUserImage} where user_id = #{userId}
+    </update>
+    <update id="updateUserBack">
+        UPDATE tb_user SET user_back = #{setBack} where user_id = #{userId}
+    </update>
+    <update id="updateUserAvatar">
+        UPDATE tb_user SET user_image = #{setUserImage} where user_image = #{pictureId}
+    </update>
+    <update id="updateBack">
+        UPDATE tb_user SET user_back = #{setBack} where user_back = #{pictureId}
+    </update>
+    <update id="frozenUser">
+        UPDATE tb_user SET user_status = 1 WHERE user_id = #{userId}
+    </update>
+    <update id="frozenUsers">
+        UPDATE tb_user SET user_status = 1 WHERE user_violation >5
+    </update>
+    <update id="unfrozenUser">
+        UPDATE tb_user SET user_status = 0 WHERE user_id = #{userId}
+    </update>
+    <update id="changeUserViolence">
+        UPDATE tb_user SET user_violation = user_violation+1 WHERE user_id = #{userId}
+    </update>
+    <update id="applyUnfrozen">
+        UPDATE tb_user SET user_status = 2 ,user_violation = 0 WHERE user_id = #{userId}
+    </update>
+    <update id="unfrozenUsers">
+        UPDATE tb_user SET user_status = 0 ,user_violation = 0 WHERE user_status = 2
+    </update>
+</mapper>

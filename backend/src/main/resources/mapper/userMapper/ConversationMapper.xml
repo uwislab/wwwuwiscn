@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.funny.demo.mapper.userMapper.ConversationMapper">
+    <!--计算已创建对话个数-->
+    <select id="countConversation" resultType="Integer">
+        SELECT COUNT(*) FROM tb_conversation WHERE con_user_id = #{userId} and con_delete_flag = 0
+    </select>
+    <!--根据ID查询当前对话风格-->
+    <select id="getConversationStyle" resultType="integer">
+        SELECT con_ai_style FROM tb_conversation WHERE con_id = #{conversationId}
+    </select>
+<!--    更新最新消息-->
+    <update id="changeMessage">
+        UPDATE tb_conversation SET last_message = #{answer},last_message_time = #{date} WHERE con_id = #{conversationId}
+    </update>
+<!--    修改机器人头像-->
+    <update id="changeAiImage">
+        UPDATE tb_conversation SET con_ai_image = #{image} WHERE con_id = #{conversationId}
+    </update>
+    <!--修改机器人备注-->
+    <update id="changeAiNotes">
+        update tb_conversation SET con_ai_notes = #{notes} WHERE con_id = #{conversationId}
+    </update>
+    <!--用户端逻辑删除对话-->
+    <update id="deleteConversation">
+        update tb_conversation SET con_delete_flag = 1 WHERE con_id = #{conversationId}
+    </update>
+    <update id="changeAiStyle">
+        update tb_conversation SET con_ai_style = #{aiStyle} WHERE con_id = #{conversationId}
+    </update>
+    <update id="updateRobotImage">
+        update tb_conversation SET con_ai_image = #{setRobotImage} WHERE con_ai_image = #{pictureId}
+    </update>
+</mapper>

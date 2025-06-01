@@ -1,0 +1,68 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://www.uwis.cn:3306/yzbc?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+#    username: robotwed       # 在线数据库账号
+#    password: LG5qnmHfe5KmVDQb # 在线数据库密码
+    url: jdbc:mysql://localhost:3306/funny?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    username: root
+    password: 123456
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      table-prefix: tb_
+      id-type: auto
+
+# 微信配置
+wechat:
+  appid: wx36e0b3cce57a269e
+  secret: 8b7758f2b2472536bfe2810ea47fbb46
+
+# JWT配置
+jwt:
+  secret: 5HBH7srBuLaL6gfy1bWM/lnKEKfnCYKeEBevg/YztDE=
+  expiration: 14400000 #4小时
+
+server:
+  port: 8888
+  workId: 2
+  datacenterId: 5
+
+Picture:
+  url: D:/funny/images/
+
+aliyun:
+  oss:
+    endpoint: oss-cn-chengdu.aliyuncs.com
+    accessKeyId: ${ALIYUN_ACCESS_KEY_ID}
+    accessKeySecret: ${ALIYUN_ACCESS_KEY_SECRET}
+    bucketName: funny-data
+    urlExpireTime: 31536000 #签名有效时间
+    folder: tts/
+
+# 讯飞配置
+xunfei:
+  api:
+    host: tts-api.xfyun.cn
+    path: /v2/tts
+    appid: 6684d585
+    api-key: e663a167f4925ee26d11512fc0855362
+    api-secret: YjU5Yjg4MGU5NGRmNjU4MWJhYzQ4ZDc2
+    voice-name: xiaoyan
+    speed: 50
+    volume: 50
+  stt:
+    host: iat-api.xfyun.cn
+    path: /v2/iat
+    appid: 6684d585
+    api-key: e663a167f4925ee26d11512fc0855362
+    api-secret: YjU5Yjg4MGU5NGRmNjU4MWJhYzQ4ZDc2
+    language: zh_cn
+    domain: iat

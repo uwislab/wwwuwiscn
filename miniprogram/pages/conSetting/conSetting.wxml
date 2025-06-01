@@ -1,0 +1,93 @@
+<!--pages/conSetting/conSetting.wxml-->
+<!-- pages/profile/profile.wxml -->
+<view class="container">
+  <!-- 信息列表 -->
+  <view class="info-list">
+    <!-- 头像条目 -->
+    <view 
+      class="list-item" 
+      bindtap="changeAvatar"
+    >
+      <text class="item-label">机器人头像</text>
+      <image 
+        class="avatar" 
+        src="{{conversationShow.conUrl}}" 
+        mode="aspectFill"
+      />
+      <image class="arrow" src="/images/arrow-right.png"/>
+    </view>
+
+    <!-- 姓名条目 -->
+    <view class="list-item">
+      <text class="item-label">名称</text>
+      <text class="item-value">{{conversationShow.conversation.conAiName}}</text>
+    </view>
+    <!-- 昵称条目 -->
+    <view 
+      class="list-item" 
+      bindtap="editField"
+      data-field="conAiNotes"
+    >
+      <text class="item-label">备注</text>
+      <text class="item-value">{{conversationShow.conversation.conAiNotes}}</text>
+      <image class="arrow" src="/images/arrow-right.png"/>
+    </view>
+
+    
+    <!-- 对话风格条目 -->
+    <view 
+      class="list-item" 
+      bindtap="editField"
+      data-field="conAiStyle"
+    >
+      <text class="item-label">对话风格</text>
+      <text class="item-value">{{styleMap[conversationShow.conversation.conAiStyle]}}</text>
+      <image class="arrow" src="/images/arrow-right.png"/>
+    </view>
+
+    <!-- 个性签名 -->
+    <view class="list-item">
+      <text class="item-label">创建时间</text>
+      <text class="item-value">{{conversationShow.conversation.conCreatedTime}}</text>
+    </view>
+
+    <!-- 聊天背景 -->
+    <!-- <navigator url="/pages/chat-bg/chat-bg">
+      <view class="list-item last-item">
+      <text class="item-label">聊天背景</text>
+      <image class="arrow" src="/images/arrow-right.png"/>
+      </view>
+    </navigator> -->
+  </view>
+  <!-- 编辑弹窗 -->
+  <modal 
+    wx:if="{{showEditModal}}"
+    title="编辑{{currentField}}"
+    confirm-text="保存"
+    cancel-text="取消"
+    bindconfirm="saveEdit"
+    bindcancel="cancelEdit"
+  >
+    <view class="edit-content">
+      <block wx:if="{{currentField === 'conAiStyle'}}">
+        <picker 
+          value="{{styleIndex}}"
+          range="{{styleMap}}"
+          bindchange="styleChange"
+        >
+          <view class="picker">{{styleMap[styleIndex]}}</view>
+        </picker>
+      </block>
+      
+      <block wx:else>
+        <input 
+          type="text"
+          value="{{editValue}}"
+          placeholder="请输入{{currentField}}"
+          bindinput="onInputEdit"
+          class="edit-input"
+        />
+      </block>
+    </view>
+  </modal>
+</view>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.funny.demo.mapper.userMapper.MessageMapper">
+<!--用户端逻辑删除特定聊天记录-->
+    <update id="deleteChatHistory" parameterType="String">
+        update tb_message SET message_delete_flag = 1 WHERE message_id = #{MessageId}
+    </update>
+<!--逻辑删除某会话下的所有聊天记录-->
+    <update id="deleteAllChatHistory">
+        update tb_message SET message_delete_flag = 1 WHERE message_conversation_id = #{conversationId}
+    </update>
+
+</mapper>
