@@ -1,0 +1,23 @@
+FROM ubuntu:20.04
+
+# 安装 Nginx
+RUN apt-get update && apt-get install -y nginx
+
+# 安装 PHP 7.4
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository ppa:ondrej/php
+RUN apt-get update && apt-get install -y php7.4 php7.4-fpm php7.4-mysql php7.4-mbstring php7.4-curl php7.4-xml php7.4-zip
+
+# 配置 Nginx 和 PHP-FPM
+COPY nginx.conf /etc/nginx/sites-available/default
+RUN echo "cgi.fix_pathinfo=0" >> /etc/php/7.4/fpm/php.ini
+
+# 启动脚本
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+# 暴露端口
+EXPOSE 80
+
+# 启动服务
+CMD ["/start.sh"]
