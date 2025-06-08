@@ -33,8 +33,7 @@ jobs:
           context: .
           file: Dockerfile.backend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/springboot-backend:$
-{{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/springboot-backend:${{ github.sha }}
    # 构建并推送前端镜像
       - name: Build Frontend image
         uses: docker/build-push-action@v4
@@ -42,8 +41,7 @@ jobs:
          context: .
          file: Dockerfile.frontend
          push: true
-         tags: ${{ secrets.DOCKERHUB_USERNAME }}/vue-frontend:$
-{{ github.sha }}
+         tags: ${{ secrets.DOCKERHUB_USERNAME }}/vue-frontend:${{ github.sha }}
 # 新增：构建并推送微信小程序镜像
       - name: Build Miniprogram image
         uses: docker/build-push-action@v4
@@ -62,8 +60,7 @@ jobs:
           script: |
             cd /home/2025ug01/springboot-vue-project
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/springboot-backend:${{ github.sha }}
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/vue-frontend:$
-{{ github.sha }}
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/vue-frontend:${{ github.sha }}
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/miniprogram-frontend:${{ github.sha }}
             echo "MYSQL_USERNAME=${{secret.MYSQL_USERNAME}}" > .env
 	    echo "MYSQL_PASSWORD=${{secret.MYSQL_PASSWORD}}" > .env
