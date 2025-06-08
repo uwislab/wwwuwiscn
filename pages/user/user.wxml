@@ -1,0 +1,72 @@
+<view class="container">
+  <!-- 用户头像 -->
+  <view class="avatar-section" bindtap="changeAvatar">
+    <image class="avatar" src="{{userInfo.pictureUrl}}"/>
+    <text class="edit-tip">点击更换头像</text>
+  </view>
+
+  <!-- 信息列表 -->
+  <view class="info-list">
+    <!-- 昵称 -->
+    <view class="list-item" bindtap="editField" data-field="userName">
+      <text class="item-label">昵称</text>
+      <text class="item-value">{{userInfo.user.userName}}</text>
+      <image class="arrow" src="/images/arrow-right.png"/>
+    </view>
+
+    <!-- 性别 -->
+    <view class="list-item" bindtap="editField" data-field="userSex">
+      <text class="item-label">性别</text>
+      <text class="item-value">{{genderMap[userInfo.user.userSex]}}</text>
+      <image class="arrow" src="/images/arrow-right.png"/>
+    </view>
+
+    <!-- 个性签名 -->
+    <view class="list-item" bindtap="editField" data-field="userSignature">
+      <text class="item-label">个性签名</text>
+      <text class="item-value">{{userInfo.user.userSignature || '未设置'}}</text>
+      <image class="arrow" src="/images/arrow-right.png"/>
+    </view>
+
+    <!-- 聊天背景 -->
+    <view class="list-item" bindtap="navigateToChatBg">
+      <text class="item-label">聊天背景</text>
+      <image class="arrow" src="/images/arrow-right.png"/>
+    </view>
+
+    <!-- 注销用户 -->
+    <view class="list-item" bindtap="openLogOffModal">
+      <text class="item-label">注销账号</text>
+      <image class="arrow" src="/images/arrow-right.png"/>
+    </view>
+  </view>
+  
+  <!-- 编辑弹窗 -->
+  <view wx:if="{{showEditModal}}" class="modal-mask">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">编辑{{currentFieldName}}</text>
+      </view>
+      
+      <block wx:if="{{currentField === 'userSex'}}">
+        <picker value="{{genderIndex}}" range="{{genderMap}}" bindchange="handleGenderChange">
+          <view class="picker-item">{{editValue}}</view>
+        </picker>
+      </block>
+
+      <block wx:else>
+        <input 
+          class="edit-input"
+          value="{{editValue}}"
+          placeholder="请输入{{currentFieldName}}"
+          bindinput="handleInputChange"
+        />
+      </block>
+
+      <view class="modal-footer">
+        <button class="btn cancel" bindtap="closeModal">取消</button>
+        <button class="btn confirm" bindtap="saveChanges">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

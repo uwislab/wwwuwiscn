@@ -1,12 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://www.uwis.cn:3306/yzbc?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-#    username: robotwed       # 在线数据库账号
-#    password: LG5qnmHfe5KmVDQb # 在线数据库密码
-    url: jdbc:mysql://localhost:3306/funny?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
-    username: root
-    password: 123456
+    url: jdbc:mysql://www.uwis.cn:3306/yzbc?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: ${MYSQL_USERNAME}       # 在线数据库账号
+    password: ${MYSQL_PASSWORD} # 在线数据库密码
   data:
     redis:
       host: 127.0.0.1
@@ -22,12 +19,12 @@ mybatis-plus:
 
 # 微信配置
 wechat:
-  appid: wx36e0b3cce57a269e
-  secret: 8b7758f2b2472536bfe2810ea47fbb46
+  appid: ${WECHAT_APPID}
+  secret: ${WECHAT_SECRET}
 
 # JWT配置
 jwt:
-  secret: 5HBH7srBuLaL6gfy1bWM/lnKEKfnCYKeEBevg/YztDE=
+  secret: ${JWT_SECRET}
   expiration: 14400000 #4小时
 
 server:
@@ -52,17 +49,17 @@ xunfei:
   api:
     host: tts-api.xfyun.cn
     path: /v2/tts
-    appid: 6684d585
-    api-key: e663a167f4925ee26d11512fc0855362
-    api-secret: YjU5Yjg4MGU5NGRmNjU4MWJhYzQ4ZDc2
+    appid: ${XUNFEI_APPID}
+    api-key: ${XUNFEI_API_KEY}
+    api-secret: ${XUNFEI_API_SECRET}
     voice-name: xiaoyan
     speed: 50
     volume: 50
   stt:
     host: iat-api.xfyun.cn
     path: /v2/iat
-    appid: 6684d585
-    api-key: e663a167f4925ee26d11512fc0855362
-    api-secret: YjU5Yjg4MGU5NGRmNjU4MWJhYzQ4ZDc2
+    appid: ${XUNFEI_APPID}
+    api-key: ${XUNFEI_API_KEY}
+    api-secret: ${XUNFEI_API_SECRET}
     language: zh_cn
     domain: iat
