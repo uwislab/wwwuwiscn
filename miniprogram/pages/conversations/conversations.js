@@ -15,7 +15,7 @@ Page({
     styleIndex: 0,
     newAiName:'',
     remark:'',
-    converations:[
+    conversations:[
     ]
   },
   handleLongPress(e) {
@@ -48,40 +48,45 @@ Page({
           "conversationId":conId
         },
         success:(res) =>{
+          if(!res.data.flag){
+            wx.showToast({
+              title: '删除对话失败',
+            })
+          }
           this.getConversations()
         },
         fail:(err) =>{
-          console.log("获取对话失败")
+          console.log("删除对话失败")
         }
     })
   },
-  // 时间规范化
-  formatTime(originTime) {
-    console.log(originTime)
-    const targetTime = new Date(originTime);
-    const now = new Date();
-    const year = now.getFullYear();
-    const targetYear = targetTime.getFullYear();
-    const diffDay = Math.ceil((now - targetTime) / (1000 * 60 * 60 * 24));
+  // // 时间规范化
+  // formatTime(originTime) {
+  //   console.log(originTime)
+  //   const targetTime = new Date(originTime);
+  //   const now = new Date();
+  //   const year = now.getFullYear();
+  //   const targetYear = targetTime.getFullYear();
+  //   const diffDay = Math.ceil((now - targetTime) / (1000 * 60 * 60 * 24));
 
-    // 格式化时分
-    const formatHM = (date) => {
-      const h = String(date.getHours()).padStart(2, '0');
-      const m = String(date.getMinutes()).padStart(2, '0');
-      return `${h}:${m}`;
-    };
+  //   // 格式化时分
+  //   const formatHM = (date) => {
+  //     const h = String(date.getHours()).padStart(2, '0');
+  //     const m = String(date.getMinutes()).padStart(2, '0');
+  //     return `${h}:${m}`;
+  //   };
 
-    if (targetYear < year) {
-      return targetTime.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' });
-    }
-    if (diffDay > 1) {
-      return targetTime.toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' });
-    }
-    if (diffDay === 1) {
-      return `昨天 ${formatHM(targetTime)}`;
-    }
-    return formatHM(targetTime);
-  },
+  //   if (targetYear < year) {
+  //     return targetTime.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  //   }
+  //   if (diffDay > 1) {
+  //     return targetTime.toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' });
+  //   }
+  //   if (diffDay === 1) {
+  //     return `昨天 ${formatHM(targetTime)}`;
+  //   }
+  //   return formatHM(targetTime);
+  // },
   // 打开弹窗
   openModal() {
     wx.request({
@@ -142,12 +147,20 @@ Page({
         "aiNotes":this.data.remark
       },
       success:(res) =>{
-        wx.showToast({
-          title: '成功',
-          icon: 'success',
-          duration: 200
-        })
-        this.onLoad();
+        if(res.data.flag){
+          wx.showToast({
+            title: '成功',
+            icon: 'success',
+            duration: 200
+          })
+          this.onLoad();
+        }else{
+          wx.showToast({
+            title: '新增对话失败',
+            icon: 'error',
+            duration: 200
+          })
+        }
       }  
     })
     this.closeModal()
@@ -181,7 +194,7 @@ this.setData({
       url: `/pages/chat/chat?conId=${conId}`
     })
 },
-async getConversations(){
+ getConversations(){
   wx.request({
     url: 'http://localhost:8888/funny/user/chat/selectConversations', //自己的服务接口地址
     method: 'get',
@@ -190,16 +203,10 @@ async getConversations(){
       "token":token
     },  
     success: (res) => {
-      const conversations = res.data.result;
-conversations.forEach((item) => {
-  if (item.conversation.lastMessage) {
-    item.conversation.lastMessage = item.conversation.lastMessage.replace(/\n{2,}/g, ' '); // 替换不间断空行为普通空格
-  }
-});
-this.setData({ 
-  conversations:conversations
- });
- console.log("conversations:",conversations)
+      this.setData({ 
+        conversations:res.data.result
+      });
+      console.log("conversations:",conversations)
     },
     fail: (err) =>{
       console.log("请求失败",err)

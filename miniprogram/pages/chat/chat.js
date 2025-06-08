@@ -75,7 +75,7 @@ handleLongPress(e) {
 },
 async deleteMessage(messageId){
   wx.request({
-    url: 'http:/localhost:8888/funny/user/chat/deletePartChatHistory',
+    url: 'http://localhost:8888/funny/user/chat/deletePartChatHistory',
     method: 'put',
     header:{
         //   wx.getStorageSync('token') 从缓存中取出token值

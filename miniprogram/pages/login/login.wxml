@@ -21,7 +21,7 @@
     <button 
       class="login-btn"
       open-type="getUserProfile"
-      bindtap="handleLogin"
+      bindtap="forRequest"
       loading="{{isLoading}}"
     >
       {{isLoading ? '登录中...' : '微信一键登录'}}

@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+  redis:
+    image: redis/redis-stack-server:latest  # 指定镜像
+    ports:
+      - "6379:6379"  # Redis 核心端口（后端连接）
+    volumes:
+      - redis_data:/data  # 挂载数据卷（持久化）
+    networks:
+      - app_network
+ backend:
+  build:
+   context: .
+   dockerfile: Dockerfile.backend
+  ports:
+   - "85081:8080" # 宿主机端口 85081 映射容器 8080
+  environment:
+    REDIS_HOST: redis
+    REDIS_PORT: 6379
+  depends_on:
+   - redis
+  networks:
+   - app_network # 自定义网络实现容器间通信
+ frontend:
+  build:
+   context: .
+   dockerfile: Dockerfile.frontend
+  ports:
+   - "85080:80" # 宿主机端口 85080 映射容器 80
+  depends_on:
+   - backend
+  networks:
+   - app_network
+ miniprogram:
+   build:
+     context: .
+     dockerfile: Dockerfile.miniprogram
+   ports:
+    - "85082:80" # 宿主机端口 85082 映射容器 80（端口需唯一）
+   depends_on:
+    - backend # 可选：若小程序需依赖后端启动
+   networks:
+    - app_network # 加入统一网络（如需与后端通信）
+ # 网络配置
+networks:
+ app_network:
+   driver: bridge
+volumes:
+  redis_data:

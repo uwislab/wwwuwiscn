@@ -33,8 +33,14 @@
       <text class="item-label">聊天背景</text>
       <image class="arrow" src="/images/arrow-right.png"/>
     </view>
-  </view>
 
+    <!-- 注销用户 -->
+    <view class="list-item" bindtap="openLogOffModal">
+      <text class="item-label">注销账号</text>
+      <image class="arrow" src="/images/arrow-right.png"/>
+    </view>
+  </view>
+  
   <!-- 编辑弹窗 -->
   <view wx:if="{{showEditModal}}" class="modal-mask">
     <view class="modal-content">

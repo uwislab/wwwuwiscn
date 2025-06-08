@@ -3,7 +3,21 @@ Page({
     isLoading:false,
     showModal:false
   },
-  handleLogin(e) {
+  forRequest(){
+    wx.showModal({
+      content: '是否同意小程序获取用户信息？',
+      success: (res) =>{
+        if (res.confirm) {
+          this.handleLogin()
+        } else if (res.cancel) {
+         wx.showToast({
+           title: '已取消授权',
+         })
+        }
+      }
+    })
+  },
+  handleLogin() {
     if (this.data.isLoading) return;
     this.setData({ isLoading: true });
     let that = this;

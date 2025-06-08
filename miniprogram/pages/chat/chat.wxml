@@ -132,11 +132,6 @@ style="background-image: url({{chatBackground}}); background-size: cover;">
       class="record-indicator {{isSwiping ? 'cancel' : ''}}"
       wx:if="{{isRecording}}"
     >
-      <!-- <view class="waveform">
-        <block wx:for="{{waveformData}}" wx:key="index">
-          <view class="wave-bar" style="height: {{item}}"></view>
-        </block>
-      </view> -->
       {{isSwiping ? '松开取消' : '正在录音'}}
     </view>
   </view>

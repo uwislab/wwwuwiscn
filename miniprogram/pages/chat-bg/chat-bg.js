@@ -120,7 +120,12 @@ Page({
               icon: 'success'
             })
             console.log(this.data.presetBackgrounds)
+            return ; 
           }
+          wx.showToast({
+            title: '背景设置失败',
+            icon: 'error'
+          })
         },
         fail:(err) =>{
           wx.showToast({

@@ -249,6 +249,34 @@ changeName(userName){
     })
   },
 
+  openLogOffModal(){
+    wx.showModal({
+      content: '注销账号后您的账号信息将被删除，请问是否要注销账号？',
+      success: (res) =>{
+        if (res.confirm) {
+          wx.request({
+            url: 'http://localhost:8888/funny/user/deleteUser', //自己的服务接口地址
+            method: 'put',
+            header: {
+              "token": wx.getStorageSync('token')
+            },
+            success: (res) => {
+              if(res.data.flag){
+                wx.navigateTo({
+                  url: '/pages/login/login',
+                })
+              }else{
+                wx.showToast({ title: '注销出失败' });
+              }
+            },
+            fail: (err) => {
+              wx.showToast({ title: '系统出错' })
+            }
+          })
+        } 
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
