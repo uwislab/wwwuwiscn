@@ -33,7 +33,7 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/vue-frontend:${{ github.sha }}
       # 部署到服务器
       - name: SSH Deploy
-        uses: appleboy/ssh-action@v0.1.17
+        uses: appleboy/ssh-action@master
         with:
           host: us.uwis.cn
           username: 2025ug01
