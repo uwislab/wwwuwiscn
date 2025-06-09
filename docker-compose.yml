@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "85081:8080"  # 宿主机端口85081映射容器8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/robots
+      - SPRING_DATASOURCE_USERNAME=spring_user
+      - SPRING_DATASOURCE_PASSWORD=spring_pass
+    depends_on:
+      - db
+    networks:
+      - app_network  # 自定义网络实现容器间通信
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "85080:80"  # 宿主机端口85080映射容器80
+    depends_on:
+      - backend
+    networks:
+      - app_network
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_pass
+      - MYSQL_DATABASE=springboot_db
+      - MYSQL_USER=spring_user
+      - MYSQL_PASSWORD=spring_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+    expose:
+      - 3306
+    networks:
+      - app_network  # 加入自定义网络，供后端连接
+# 数据卷和网络配置
+volumes:
+  mysql_data:
+networks:
+  app_network:

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springbootrobot.dao.FavoriteDao">
+    <insert id="addFavorite">
+        INSERT INTO favorites (user_id, project_id)
+        VALUES (#{user_id}, #{project_id})
+    </insert>
+
+    <delete id="deleteFavorite">
+        DELETE FROM favorites WHERE user_id = #{user_id} AND project_id = #{project_id}
+    </delete>
+
+    <select id="getFavoritesByUserId" resultType="org.example.springbootrobot.bean.Favorite">
+        SELECT * FROM favorites WHERE user_id = #{user_id}
+    </select>
+</mapper>

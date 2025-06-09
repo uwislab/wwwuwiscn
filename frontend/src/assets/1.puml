@@ -1,0 +1,21 @@
+@startuml
+actor 用户
+participant "GUI" as gui
+participant "Blockly" as blockly
+participant "CodeGen" as codegen
+participant "Network" as network
+participant "Server" as server
+participant "Robot" as robot
+
+用户 -> gui: 设计程序 & 点击运行
+gui -> blockly: 获取图形化代码
+blockly -> codegen: 生成并转换为C代码
+codegen -> network: 传递编码后C代码
+network -> server: 发送请求 (含ID/password)
+server -> server: 验证 & 编译代码
+server -> robot: 执行指令
+robot -> server: 返回结果
+server -> network: 返回响应
+network -> gui: 显示结果
+gui -> 用户: 查看执行状态
+@enduml

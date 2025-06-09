@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springbootrobot.dao.MenuDao">
+    <select id="getMenuList" resultType="org.example.springbootrobot.bean.Menu">
+        select * from menu
+        order by morder
+    </select>
+
+    <select id="getAllMenu" resultType="org.example.springbootrobot.bean.Menu">
+        select * from menu
+        <if test="name != null">
+            where name like #{name}
+        </if>
+        order by morder
+        LIMIT #{pageStart},#{pageSize}
+    </select>
+
+    <select id="getMenuCounts" resultType="java.lang.Integer">
+        SELECT count(*) FROM menu
+        <if test="name !=null ">
+            WHERE name like #{name}
+        </if>
+    </select>
+
+    <select id="getMenuById" resultType="org.example.springbootrobot.bean.Menu">
+        SELECT * FROM menu WHERE id = #{id}
+    </select>
+
+    <update id="updateMenu">
+        UPDATE menu SET name = #{name}, required_role_id = #{required_role_id}, morder = #{morder}, location = #{location}, icon = #{icon}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

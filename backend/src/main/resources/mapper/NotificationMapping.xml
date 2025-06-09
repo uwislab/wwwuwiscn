@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springbootrobot.dao.NotificationDao">
+
+    <insert id="addNotification">
+        INSERT INTO notifications (recipient_id, sender_id, type, project_id, comment_id)
+        VALUES (#{recipient_id}, #{sender_id}, #{type}, #{project_id}, #{comment_id})
+    </insert>
+
+    <select id="getNotificationsByRecipientId" resultType="org.example.springbootrobot.bean.Notification">
+        SELECT * FROM notifications WHERE recipient_id = #{recipient_id}
+    </select>
+
+    <update id="markNotificationAsRead">
+        UPDATE notifications SET is_read = true WHERE notification_id = #{notification_id}
+    </update>
+
+</mapper>

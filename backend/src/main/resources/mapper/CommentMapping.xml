@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springbootrobot.dao.CommentDao">
+
+    <insert id="addComment">
+        INSERT INTO comments (user_id, project_id, parent_comment_id, content)
+        VALUES (#{user_id}, #{project_id}, #{parent_comment_id}, #{content})
+    </insert>
+
+    <select id="getCommentsByProjectId" resultType="org.example.springbootrobot.bean.Comment">
+        SELECT * FROM comments WHERE project_id = #{project_id}
+    </select>
+
+    <select id="getRepliesByCommentId" resultType="org.example.springbootrobot.bean.Comment">
+        SELECT * FROM comments WHERE parent_comment_id = #{comment_id}
+    </select>
+
+    <delete id="deleteComment">
+        DELETE FROM comments
+        WHERE comment_id = #{comment_id}
+        AND user_id = #{user_id}
+        <choose>
+            <!-- 如果是父评论，同时删除其所有回复 -->
+            <when test="parent_comment_id == null">
+                OR parent_comment_id = #{comment_id}
+            </when>
+        </choose>
+    </delete>
+
+    <!-- 检查评论是否存在 -->
+    <select id="checkCommentExists" resultType="int">
+        SELECT COUNT(1) FROM comments WHERE comment_id = #{comment_id}
+    </select>
+
+    <!-- 查询用户发表的评论 -->
+    <select id="getCommentsByUserId" resultType="org.example.springbootrobot.bean.Comment">
+        SELECT * FROM comments
+        WHERE user_id = #{user_id}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 查询回复给用户的评论 -->
+    <select id="getRepliesToUser" resultType="org.example.springbootrobot.bean.Comment">
+        SELECT c.*
+        FROM comments c
+                 JOIN (
+            SELECT comment_id
+            FROM comments
+            WHERE user_id = #{user_id}
+        ) parent ON c.parent_comment_id = parent.comment_id
+        WHERE c.parent_comment_id IS NOT NULL
+        ORDER BY c.created_at DESC
+    </select>
+
+</mapper>
