@@ -54,7 +54,7 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/miniprogram-frontend:${{ github.sha }}
 
       - name: SSH Deploy
-        uses: appleboy/ssh-action@v0.1.17
+        uses: appleboy/ssh-action@v0.1.7
         with:
           host: us.uwis.cn
           username: 2025ug01
