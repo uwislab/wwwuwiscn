@@ -41,13 +41,15 @@ public class MyAIService {
             String finalPrompt = Prompts.getPrompt(userInput, textContents, rawHistory, promptId);
             System.out.println("finalPrompt:"+finalPrompt);
             String answer = "";
-            if(promptId==3){
-                ChatLanguageModel model = openAiModel;
-                answer = model.generate(finalPrompt);
-            }else{
-                ChatLanguageModel model = ollamaModel;
-                answer = model.generate(finalPrompt);
-            }
+//            if(promptId==3){
+//                ChatLanguageModel model = openAiModel;
+//                answer = model.generate(finalPrompt);
+//            }else{
+//                ChatLanguageModel model = ollamaModel;
+//                answer = model.generate(finalPrompt);
+//            }
+            ChatLanguageModel model = openAiModel;
+            answer = model.generate(finalPrompt);
             return answer;
         } catch (Exception e) {
             return "服务暂时不可用，请稍后再试";
